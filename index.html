@@ -1,0 +1,1708 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>INMERSA - Administracion en Farmacia</title>
+  <!-- Si Moodle ya carga Bootstrap 4.3, puede eliminarse este enlace. -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .inmersa-moodle {
+      --inmersa-fondo: #F5F7FB;
+      --inmersa-fondo-2: #EAF4F8;
+      --inmersa-superficie: #FFFFFF;
+      --inmersa-superficie-clara: #F0F6FA;
+      --inmersa-borde: #C9DAE3;
+      --inmersa-principal: #2C7DA0;
+      --inmersa-accion: #4C9F70;
+      --inmersa-info: #5C88C4;
+      --inmersa-advertencia: #C58A2B;
+      --inmersa-riesgo: #C95C54;
+      --inmersa-texto: #26354A;
+      --inmersa-texto-sec: #60758A;
+      --inmersa-texto-tenue: #8393A4;
+      --inmersa-exp: #D8ECFF;
+      --inmersa-exp-strong: #2C7DA0;
+      background: linear-gradient(160deg, var(--inmersa-fondo) 0%, var(--inmersa-fondo-2) 62%, #FFF8EA 100%);
+      color: var(--inmersa-texto);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    .inmersa-moodle * { box-sizing: border-box; }
+    .inmersa-moodle .inmersa-shell { max-width: 1140px; margin: 0 auto; }
+    .inmersa-moodle .inmersa-hero {
+      position: relative;
+      overflow: hidden;
+      min-height: 315px;
+      margin-bottom: 1.5rem;
+      padding: 3rem 3.5rem 2.25rem;
+      background:
+        radial-gradient(circle at 80% 22%, rgba(44,125,160,.12), transparent 26%),
+        linear-gradient(160deg, #E9F5FF 0%, #EFFAF4 58%, #FFF8EA 100%);
+      border: 1px solid rgba(44,125,160,.2);
+      border-radius: 0;
+      box-shadow: 0 12px 32px rgba(0,0,0,.22);
+    }
+    .inmersa-moodle .inmersa-hero:before {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 4.8rem;
+      width: 58%;
+      height: 42px;
+      border: 1px solid rgba(44,125,160,.28);
+      border-top: 0;
+      opacity: .65;
+    }
+    .inmersa-moodle .inmersa-hero-copy {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+    .inmersa-moodle .inmersa-hero-hospital {
+      color: #2C7DA0;
+      font-size: 2rem;
+      line-height: 1.05;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin: 0 0 .35rem;
+    }
+    .inmersa-moodle .inmersa-hero-service {
+      color: #60758A;
+      font-size: 1.45rem;
+      line-height: 1.15;
+      font-weight: 600;
+      margin: 0 0 3rem;
+    }
+    .inmersa-moodle .inmersa-hero-brand {
+      color: #26354A;
+      font-size: 3.95rem;
+      line-height: 1;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      font-weight: 900;
+      margin: 0 0 2.75rem;
+    }
+    .inmersa-moodle .inmersa-hero-program {
+      color: #60758A;
+      font-size: 1.45rem;
+      line-height: 1.12;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin: 0 0 .25rem;
+    }
+    .inmersa-moodle .inmersa-hero-route {
+      color: #3B5268;
+      font-size: 1.45rem;
+      line-height: 1.15;
+      font-weight: 600;
+      margin: 0;
+    }
+    .inmersa-moodle .inmersa-hospital-mark {
+      position: absolute;
+      right: 3rem;
+      top: 3.2rem;
+      width: 31%;
+      min-width: 270px;
+      height: 210px;
+      border: 1px solid rgba(44,125,160,.24);
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .inmersa-moodle .inmersa-hospital-icon {
+      position: relative;
+      width: 230px;
+      height: 150px;
+      border-radius: 4px 4px 2px 2px;
+      background: #7BCDBA;
+      box-shadow: 0 8px 18px rgba(44,125,160,.16);
+    }
+    .inmersa-moodle .inmersa-hospital-icon:before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -58px;
+      width: 142px;
+      height: 58px;
+      transform: translateX(-50%);
+      border-radius: 3px 3px 0 0;
+      background: #7BCDBA;
+    }
+    .inmersa-moodle .inmersa-hospital-icon:after {
+      content: "";
+      position: absolute;
+      left: -15px;
+      right: -15px;
+      bottom: -10px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(44,125,160,.45);
+    }
+    .inmersa-moodle .inmersa-hospital-door {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 48px;
+      height: 60px;
+      transform: translateX(-50%);
+      background: #F5F7FB;
+    }
+    .inmersa-moodle .inmersa-hospital-cross {
+      position: absolute;
+      left: 50%;
+      top: -47px;
+      width: 16px;
+      height: 38px;
+      transform: translateX(-50%);
+      background: #F5F7FB;
+    }
+    .inmersa-moodle .inmersa-hospital-cross:after {
+      content: "";
+      position: absolute;
+      left: -14px;
+      top: 12px;
+      width: 44px;
+      height: 14px;
+      background: #F5F7FB;
+    }
+    .inmersa-moodle .inmersa-hospital-window {
+      position: absolute;
+      width: 18px;
+      height: 26px;
+      background: #08252C;
+      top: 25px;
+    }
+    .inmersa-moodle .inmersa-hospital-window.row-2 { top: 68px; }
+    .inmersa-moodle .inmersa-hospital-window.w1 { left: 26px; }
+    .inmersa-moodle .inmersa-hospital-window.w2 { left: 62px; }
+    .inmersa-moodle .inmersa-hospital-window.w3 { left: 98px; }
+    .inmersa-moodle .inmersa-hospital-window.w4 { right: 98px; }
+    .inmersa-moodle .inmersa-hospital-window.w5 { right: 62px; }
+    .inmersa-moodle .inmersa-hospital-window.w6 { right: 26px; }
+    .inmersa-moodle .inmersa-topbar {
+      background: var(--inmersa-superficie);
+      border: 1px solid var(--inmersa-borde);
+      border-radius: 8px;
+      padding: .75rem 1rem;
+      box-shadow: 0 8px 24px rgba(38,53,74,.08);
+    }
+    .inmersa-moodle .inmersa-eyebrow {
+      color: var(--inmersa-texto-sec);
+      font-size: .72rem;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      margin-bottom: .2rem;
+    }
+    .inmersa-moodle .inmersa-title { font-size: 1.25rem; font-weight: 700; margin: 0; }
+    .inmersa-moodle .inmersa-subtitle { color: var(--inmersa-texto-sec); margin: .35rem 0 0; }
+    .inmersa-moodle .inmersa-panel,
+    .inmersa-moodle .inmersa-card {
+      background: var(--inmersa-superficie);
+      border: 1px solid var(--inmersa-borde);
+      border-radius: 8px;
+      box-shadow: 0 8px 22px rgba(38,53,74,.08);
+    }
+    .inmersa-moodle .inmersa-card {
+      min-height: 190px;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .inmersa-moodle .inmersa-card:hover,
+    .inmersa-moodle .inmersa-card:focus-within {
+      transform: translateY(-2px);
+      border-color: var(--inmersa-exp-strong);
+      box-shadow: 0 10px 28px rgba(38,53,74,.12);
+    }
+    .inmersa-moodle .inmersa-muted { color: var(--inmersa-texto-sec); }
+    .inmersa-moodle .inmersa-tiny { font-size: .72rem; }
+    .inmersa-moodle .inmersa-badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(47,184,166,.4);
+      color: var(--inmersa-principal);
+      background: rgba(44,125,160,.09);
+      padding: .18rem .55rem;
+      font-size: .72rem;
+      font-weight: 600;
+    }
+    .inmersa-moodle .inmersa-badge-complete {
+      border-color: rgba(63,185,138,.5);
+      color: var(--inmersa-accion);
+      background: rgba(63,185,138,.14);
+    }
+    .inmersa-moodle .inmersa-btn-primary {
+      background: var(--inmersa-principal);
+      color: #09252B;
+      border: 1px solid var(--inmersa-principal);
+      font-weight: 700;
+    }
+    .inmersa-moodle .inmersa-btn-primary:hover,
+    .inmersa-moodle .inmersa-btn-primary:focus { background: #3fd1bd; color: #09252B; }
+    .inmersa-moodle .inmersa-btn-ghost {
+      background: var(--inmersa-superficie-clara);
+      color: var(--inmersa-texto);
+      border: 1px solid var(--inmersa-borde);
+    }
+    .inmersa-moodle .inmersa-btn-link {
+      color: var(--inmersa-texto-sec);
+      background: transparent;
+      border: 0;
+      padding: .35rem .45rem;
+    }
+    .inmersa-moodle .inmersa-btn-link:hover,
+    .inmersa-moodle .inmersa-btn-link:focus { color: var(--inmersa-texto); text-decoration: underline; }
+    .inmersa-moodle .inmersa-option {
+      width: 100%;
+      text-align: left;
+      background: var(--inmersa-superficie-clara);
+      color: var(--inmersa-texto);
+      border: 1px solid var(--inmersa-borde);
+      border-radius: 8px;
+      padding: .8rem .9rem;
+      margin-bottom: .6rem;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    .inmersa-moodle .inmersa-option:hover,
+    .inmersa-moodle .inmersa-option:focus {
+      transform: translateY(-1px);
+      border-color: var(--inmersa-exp-strong);
+      background: var(--inmersa-exp);
+    }
+    .inmersa-moodle .inmersa-option-title { font-weight: 700; display: block; }
+    .inmersa-moodle .inmersa-option-detail { color: var(--inmersa-texto-sec); font-size: .82rem; display: block; margin-top: .2rem; }
+    .inmersa-moodle .inmersa-reflection {
+      background: #F3FAF4;
+      border: 1px solid #CBE6D1;
+      border-radius: 8px;
+      padding: .9rem;
+    }
+    .inmersa-moodle textarea,
+    .inmersa-moodle input[type="file"] {
+      background: #FFFFFF;
+      color: var(--inmersa-texto);
+      border: 1px solid var(--inmersa-borde);
+    }
+    .inmersa-moodle textarea::placeholder { color: var(--inmersa-texto-sec); }
+    .inmersa-moodle .inmersa-progressbar {
+      height: .55rem;
+      background: rgba(255,255,255,.12);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .inmersa-moodle .inmersa-progressbar span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--inmersa-principal), var(--inmersa-accion));
+      transition: width .25s ease;
+    }
+    .inmersa-moodle .inmersa-score-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: .65rem;
+    }
+    .inmersa-moodle .inmersa-score-pill {
+      background: var(--inmersa-exp);
+      border: 1px solid rgba(38,53,74,.08);
+      border-radius: 8px;
+      padding: .75rem;
+    }
+    .inmersa-moodle .inmersa-score-value {
+      color: var(--inmersa-principal);
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .inmersa-moodle .inmersa-score-note {
+      background: #EEF6FF;
+      border: 1px solid #C9DEF6;
+      border-radius: 8px;
+      color: #2F5F8F;
+      padding: .85rem 1rem;
+    }
+    .inmersa-moodle .inmersa-table {
+      color: var(--inmersa-texto);
+      border-color: var(--inmersa-borde);
+    }
+    .inmersa-moodle .inmersa-table td,
+    .inmersa-moodle .inmersa-table th { border-color: var(--inmersa-borde); }
+    .inmersa-moodle .inmersa-alert {
+      background: #FFF6DE;
+      border: 1px solid #E8D29A;
+      color: #725017;
+      border-radius: 8px;
+      padding: .8rem .9rem;
+    }
+    .inmersa-moodle .inmersa-sim {
+      overflow: hidden;
+      background: #FFFFFF;
+      border: 1px solid var(--inmersa-borde);
+      border-radius: 8px;
+    }
+    .inmersa-moodle .inmersa-sim-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: .75rem;
+      padding: .65rem .9rem;
+      background: var(--inmersa-exp);
+      border-bottom: 1px solid var(--inmersa-borde);
+      color: var(--inmersa-texto);
+      font-size: .82rem;
+    }
+    .inmersa-moodle .inmersa-sim-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      min-height: 560px;
+    }
+    .inmersa-moodle .inmersa-sim-main {
+      padding: 1rem;
+      min-width: 0;
+    }
+    .inmersa-moodle .inmersa-scene {
+      position: relative;
+      min-height: 300px;
+      border: 1px solid #D9C7A1;
+      border-radius: 8px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #D8ECFF 0%, #FFF6DE 100%);
+      color: #2A2620;
+    }
+    .inmersa-moodle .inmersa-scene.is-archivo {
+      background: linear-gradient(180deg, #FFF3D7 0%, #EAF4F8 100%);
+    }
+    .inmersa-moodle .inmersa-person {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .25rem;
+      color: #213039;
+      font-size: .68rem;
+    }
+    .inmersa-moodle .inmersa-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 0;
+      color: #fff;
+      background: var(--inmersa-exp-strong);
+      box-shadow: 0 4px 10px rgba(0,0,0,.2);
+      font-weight: 800;
+    }
+    .inmersa-moodle .inmersa-yesenia { top: 24px; left: 28px; }
+    .inmersa-moodle .inmersa-queue {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: .35rem;
+    }
+    .inmersa-moodle .inmersa-queue-dot {
+      width: 25px;
+      height: 25px;
+      border-radius: 999px;
+      background: #BCA679;
+      opacity: .48;
+      animation: inmersaPulse 1.9s ease-in-out infinite;
+    }
+    .inmersa-moodle .inmersa-counter {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+    .inmersa-moodle .inmersa-phone-rest {
+      color: rgba(42,38,32,.56);
+      font-size: .72rem;
+    }
+    .inmersa-moodle .inmersa-andres {
+      position: absolute;
+      right: 28px;
+      bottom: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .2rem;
+      color: rgba(42,38,32,.65);
+      font-size: .66rem;
+      animation: inmersaAndres 6s ease-in-out infinite;
+    }
+    .inmersa-moodle .inmersa-andres-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      background: #C58A2B;
+      font-size: .72rem;
+      font-weight: 800;
+    }
+    .inmersa-moodle .inmersa-folder-zone {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: .75rem;
+    }
+    .inmersa-moodle .inmersa-folder {
+      width: 96px;
+      height: 66px;
+      border-radius: 4px;
+      border: 2px solid #8C6D46;
+      background: #E3C97D;
+      color: #2A2620;
+      box-shadow: 0 8px 18px rgba(0,0,0,.22);
+      transition: transform .18s ease, background .18s ease;
+      font-weight: 800;
+    }
+    .inmersa-moodle .inmersa-folder:hover,
+    .inmersa-moodle .inmersa-folder:focus { transform: translateY(-3px); }
+    .inmersa-moodle .inmersa-folder.is-open { background: var(--inmersa-exp-strong); color: #FFFFFF; }
+    .inmersa-moodle .inmersa-paper {
+      background: #FFFDF7;
+      color: #2A2620;
+      border: 1px dashed #8C6D46;
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .inmersa-moodle .inmersa-dialogue {
+      background: #FFFFFF;
+      color: var(--inmersa-texto);
+      border: 1px solid var(--inmersa-borde);
+      border-radius: 8px;
+      padding: .85rem 1rem;
+      margin-top: .9rem;
+    }
+    .inmersa-moodle .inmersa-service-feed {
+      background: #FFF6DE;
+      color: #2A2620;
+      border-left: 1px solid rgba(201,168,118,.45);
+      padding: 1rem;
+      font-size: .78rem;
+    }
+    .inmersa-moodle .inmersa-feed-line {
+      border-left: 2px solid rgba(140,109,70,.55);
+      padding-left: .55rem;
+      margin-bottom: .45rem;
+      color: rgba(42,38,32,.72);
+    }
+    .inmersa-moodle .inmersa-interruption {
+      background: #FFFFFF;
+      border: 2px solid #B5720C;
+      color: var(--inmersa-texto);
+      border-radius: 8px;
+      padding: 1rem;
+      box-shadow: 0 10px 26px rgba(38,53,74,.12);
+      animation: inmersaFadeIn .22s ease both;
+    }
+    .inmersa-moodle .inmersa-sim-status {
+      background: var(--inmersa-superficie-clara);
+      border-radius: 8px;
+      padding: .75rem .9rem;
+      margin-top: .85rem;
+      font-size: .82rem;
+    }
+    @keyframes inmersaPulse {
+      0%, 100% { transform: scale(1); opacity: .38; }
+      50% { transform: scale(1.12); opacity: .62; }
+    }
+    @keyframes inmersaAndres {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(-14px); }
+    }
+    @keyframes inmersaFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .inmersa-moodle .inmersa-hidden { display: none !important; }
+    .inmersa-moodle button:focus-visible,
+    .inmersa-moodle a:focus-visible,
+    .inmersa-moodle textarea:focus-visible,
+    .inmersa-moodle input:focus-visible {
+      outline: 2px solid var(--inmersa-principal);
+      outline-offset: 2px;
+    }
+    @media (max-width: 767.98px) {
+      .inmersa-moodle { padding: .75rem; }
+      .inmersa-moodle .inmersa-title { font-size: 1.05rem; }
+      .inmersa-moodle .inmersa-card { min-height: auto; }
+      .inmersa-moodle .inmersa-hero { padding: 2rem 1.25rem; min-height: auto; }
+      .inmersa-moodle .inmersa-hero:before { left: 1.25rem; width: 70%; }
+      .inmersa-moodle .inmersa-hero-hospital { font-size: 1.45rem; }
+      .inmersa-moodle .inmersa-hero-service,
+      .inmersa-moodle .inmersa-hero-program,
+      .inmersa-moodle .inmersa-hero-route { font-size: 1rem; }
+      .inmersa-moodle .inmersa-hero-service { margin-bottom: 2.25rem; }
+      .inmersa-moodle .inmersa-hero-brand { font-size: 2.65rem; margin-bottom: 2rem; }
+      .inmersa-moodle .inmersa-hospital-mark { position: relative; right: auto; top: auto; width: 100%; min-width: 0; height: 170px; margin-top: 1.75rem; }
+      .inmersa-moodle .inmersa-hospital-icon { transform: scale(.72); }
+      .inmersa-moodle .inmersa-sim-body { grid-template-columns: 1fr; }
+      .inmersa-moodle .inmersa-service-feed { border-left: 0; border-top: 1px solid rgba(201,168,118,.45); }
+      .inmersa-moodle .inmersa-sim-bar { align-items: flex-start; flex-direction: column; }
+      .inmersa-moodle .inmersa-score-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="inmersa-moodle" id="inmersa-moodle-app">
+  <div class="inmersa-shell">
+    <section class="inmersa-hero" aria-label="Encabezado institucional de INMERSA">
+      <div class="inmersa-hero-copy">
+        <p class="inmersa-hero-hospital">Hospital San Juan de Dios</p>
+        <p class="inmersa-hero-service">Servicio Farmaceutico de Baja Complejidad</p>
+        <p class="inmersa-hero-brand">INMERSA</p>
+        <p class="inmersa-hero-program">Administracion en Farmacia</p>
+        <p class="inmersa-hero-route">Recorrido del Director del Servicio Farmaceutico</p>
+      </div>
+      <div class="inmersa-hospital-mark" aria-hidden="true">
+        <div class="inmersa-hospital-icon">
+          <span class="inmersa-hospital-cross"></span>
+          <span class="inmersa-hospital-door"></span>
+          <span class="inmersa-hospital-window w1"></span>
+          <span class="inmersa-hospital-window w2"></span>
+          <span class="inmersa-hospital-window w3"></span>
+          <span class="inmersa-hospital-window w4"></span>
+          <span class="inmersa-hospital-window w5"></span>
+          <span class="inmersa-hospital-window w6"></span>
+          <span class="inmersa-hospital-window row-2 w1"></span>
+          <span class="inmersa-hospital-window row-2 w2"></span>
+          <span class="inmersa-hospital-window row-2 w5"></span>
+          <span class="inmersa-hospital-window row-2 w6"></span>
+        </div>
+      </div>
+    </section>
+    <header class="inmersa-topbar mb-4">
+      <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+        <div>
+          <div class="inmersa-eyebrow">INMERSA - Servicio Farmaceutico - DTR</div>
+          <h1 class="inmersa-title">Administracion en Farmacia</h1>
+          <p class="inmersa-subtitle">Recorrido interactivo para decisiones situadas en el Hospital San Gabriel.</p>
+        </div>
+        <div class="mt-3 mt-md-0 text-md-right">
+          <span class="inmersa-badge" id="inmersa-progress-label">0 / 24 completadas</span>
+          <div class="inmersa-progressbar mt-2" aria-hidden="true"><span id="inmersa-progress-fill"></span></div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="inmersa-view-catalog">
+        <div class="inmersa-panel p-3 p-md-4 mb-3">
+          <div class="row align-items-center">
+            <div class="col-md-8">
+              <div class="inmersa-eyebrow">Catalogo de experiencias</div>
+              <h2 class="h4 mb-2">Elija una experiencia o continue el recorrido</h2>
+              <p class="inmersa-muted mb-md-0">Cada experiencia conserva una decision, una reflexion y el estado local del estudiante en este navegador. Las decisiones se valoran desde tres pilares: tecnico, normativo y administrativo, con pensamiento sistemico transversal.</p>
+            </div>
+            <div class="col-md-4 text-md-right mt-3 mt-md-0">
+              <button class="btn inmersa-btn-primary mr-2 mb-2" type="button" data-action="continue">Continuar</button>
+              <button class="btn inmersa-btn-ghost mb-2" type="button" data-action="reset">Reiniciar</button>
+            </div>
+          </div>
+        </div>
+        <div id="inmersa-score-summary"></div>
+        <div class="row" id="inmersa-cards"></div>
+        <div class="text-center mt-4">
+          <button class="inmersa-btn-link" type="button" data-action="export">Exportar sesion JSON</button>
+          <label class="inmersa-btn-link mb-0" for="inmersa-import-file">Abrir sesion revisada</label>
+          <input class="inmersa-hidden" id="inmersa-import-file" type="file" accept="application/json">
+          <button class="inmersa-btn-link" type="button" data-action="teacher">Modo docente</button>
+        </div>
+        <p class="text-center inmersa-muted inmersa-tiny mt-2" id="inmersa-import-error" aria-live="polite"></p>
+      </section>
+
+      <section id="inmersa-view-experience" class="inmersa-hidden" aria-live="polite">
+        <button class="btn inmersa-btn-ghost btn-sm mb-3" type="button" data-action="catalog">Volver al catalogo</button>
+        <div class="inmersa-panel p-3 p-md-4">
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="inmersa-eyebrow" id="inmersa-exp-kicker"></div>
+              <h2 class="h4 mb-3" id="inmersa-exp-title"></h2>
+              <p class="lead inmersa-muted" id="inmersa-exp-situation"></p>
+              <div class="inmersa-alert mb-3" id="inmersa-exp-context"></div>
+              <div id="inmersa-decision-area"></div>
+              <div class="inmersa-reflection mt-3 inmersa-hidden" id="inmersa-reflection-area">
+                <label class="font-weight-bold" for="inmersa-reflection-text" id="inmersa-reflection-label">Reflexion</label>
+                <textarea class="form-control mt-2" id="inmersa-reflection-text" rows="4" placeholder="Escriba su respuesta con sus propias palabras..."></textarea>
+                <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mt-3">
+                  <span class="inmersa-muted inmersa-tiny mb-2 mb-sm-0" id="inmersa-save-state">La reflexion se guarda en este navegador.</span>
+                  <button class="btn inmersa-btn-primary" type="button" data-action="next">Guardar y continuar</button>
+                </div>
+              </div>
+            </div>
+            <aside class="col-lg-4 mt-4 mt-lg-0">
+              <div class="inmersa-panel p-3">
+                <div class="inmersa-eyebrow">Estado de la experiencia</div>
+                <p class="mb-2">Decision elegida:</p>
+                <p class="font-weight-bold" id="inmersa-current-choice">Pendiente</p>
+                <hr style="border-color: var(--inmersa-borde);">
+                <p class="inmersa-muted inmersa-tiny mb-2">Indicadores simulados</p>
+                <table class="table table-sm inmersa-table mb-0">
+                  <tbody id="inmersa-metrics"></tbody>
+                </table>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section id="inmersa-view-teacher" class="inmersa-hidden">
+        <button class="btn inmersa-btn-ghost btn-sm mb-3" type="button" data-action="catalog">Volver al catalogo</button>
+        <div class="inmersa-panel p-3 p-md-4">
+          <div class="d-flex flex-column flex-md-row justify-content-between">
+            <div>
+              <div class="inmersa-eyebrow">Revision docente</div>
+              <h2 class="h4 mb-2">Produccion del estudiante</h2>
+              <p class="inmersa-muted">Vista resumida para revisar decisiones y reflexiones exportables.</p>
+            </div>
+            <button class="btn inmersa-btn-primary align-self-md-start" type="button" data-action="export-reviewed">Exportar revision</button>
+          </div>
+          <div class="table-responsive mt-3">
+            <table class="table table-sm inmersa-table">
+              <thead>
+                <tr>
+                  <th>Experiencia</th>
+                  <th>Decision</th>
+                  <th>Puntaje</th>
+                  <th>Reflexion</th>
+                  <th>Retroalimentacion docente</th>
+                </tr>
+              </thead>
+              <tbody id="inmersa-teacher-table"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="inmersa-view-reviewed" class="inmersa-hidden">
+        <button class="btn inmersa-btn-ghost btn-sm mb-3" type="button" data-action="catalog">Volver al catalogo</button>
+        <div class="inmersa-panel p-3 p-md-4">
+          <div class="inmersa-eyebrow">Sesion revisada</div>
+          <h2 class="h4 mb-3" id="inmersa-reviewed-title">Retroalimentacion recibida</h2>
+          <div id="inmersa-reviewed-list"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var STORAGE_KEY = "inmersa_moodle_sesion_v1";
+  var FEEDBACK_KEY = "inmersa_moodle_feedback_v1";
+
+  var experiences = [
+    { id: "EXP1", point: "exp2-hallazgo-lote", immersive: true, title: "Lo que el turno anterior dejo pendiente", context: "Mostrador y archivo documental", situation: "Un lote del turno anterior quedo con un registro que no cuadra en el archivo documental del Servicio.", prompt: "Que consecuencia de su decision considera mas relevante y por que?", options: { inmediato: "Resolver de inmediato", plan: "Documentar y trazar un plan de choque", escalar: "Escalar a la Subgerencia Administrativa" } },
+    { id: "EXP2", point: "exp3-confusion-don-ernesto", title: "El primer paciente no viene solo", context: "Consulta externa", situation: "Don Ernesto Pabon llega confundido por un cambio de empaque de su medicamento cronico, con la fila creciendo detras de el.", prompt: "Que cree que Don Ernesto necesitaba escuchar en ese momento, y su decision se lo dio?", options: { tecnica: "Explicar tecnicamente y seguir", tranquilizar: "Tranquilizar primero y explicar despues", remitir: "Remitir el caso al auxiliar" } },
+    { id: "EXP3", point: "exp17-verificacion-presupuestal-compra", title: "Comprar no es solo firmar", context: "Compras", situation: "Un proveedor ofrece un descuento sobre un pedido que vence el mismo dia, sin confirmacion previa de disponibilidad presupuestal.", prompt: "Como equilibro oportunidad comercial, responsabilidad presupuestal y continuidad del servicio?", options: { autorizar: "Autorizar la compra de inmediato", verificar: "Verificar primero el presupuesto disponible", extension: "Solicitar al proveedor una breve extension del plazo" } },
+    { id: "EXP4", point: "exp4-conteo-control-especial", title: "El conteo que no cuadra", context: "Bodega", situation: "El conteo fisico de medicamentos de control especial no coincide con el sistema.", prompt: "Como se aseguro de no senalar a nadie antes de tener certeza?", options: { investigar: "Investigar internamente primero", reportar: "Reportar de inmediato a la autoridad competente", minimizar: "Minimizar el hallazgo" } },
+    { id: "EXP5", point: "exp18-priorizacion-infraestructura-bodega", title: "La bodega que crecio sin plan", context: "Infraestructura", situation: "El presupuesto trimestral no alcanza para mejorar la infraestructura de almacenamiento y reponer inventario a la vez.", prompt: "Que criterio uso para priorizar cuando ambas necesidades parecian urgentes?", options: { infraestructura: "Priorizar la mejora de infraestructura", inventario: "Priorizar la reposicion de inventario", comite: "Solicitar al Comite de Compras una revision conjunta" } },
+    { id: "EXP6", point: "exp7-desviacion-cadena-frio", title: "La alarma que nadie vio", context: "Cadena de frio", situation: "El registro de temperatura del cuarto de cadena de frio muestra una desviacion, sin confirmacion de laboratorio sobre si comprometio los productos.", prompt: "Que peso le dio a la seguridad del paciente frente a la evidencia incompleta?", options: { descartar: "Descartar el lote de inmediato", evaluar: "Evaluar tecnicamente la desviacion", cuarentena: "Poner el lote en cuarentena provisional" } },
+    { id: "EXP7", point: "exp11-adherencia-don-ernesto", title: "El paciente que no vuelve solo", context: "Consulta externa", situation: "Don Ernesto Pabon vuelve al mostrador; algo en como describe su tratamiento sugiere un posible mal uso.", prompt: "Donde ubico el limite entre educar, documentar y remitir?", options: { educar: "Reforzar educacion basica y documentar", remitir_medico: "Remitir directamente al medico tratante", consultar_daniela: "Consultar primero con Q.F. Daniela Restrepo" } },
+    { id: "EXP8", point: "exp19-distribucion-externa", title: "El envio que se fue solo", context: "Distribucion externa", situation: "Un paciente de atencion domiciliaria no recibio su medicamento en la fecha prevista, sin registro de que ocurrio en el trayecto.", prompt: "Como decidio entre resolver rapidamente y entender la causa del fallo?", options: { resolver: "Resolver de inmediato", investigar: "Investigar primero la causa", delegar: "Delegar en Andres el seguimiento y coordinacion" } },
+    { id: "EXP9", point: "exp14-perfil-epidemiologico-consumo", title: "El perfil que nadie pregunto", context: "Comite de Farmacia y Terapeutica", situation: "El perfil epidemiologico de la poblacion atendida y el consumo historico de un medicamento no coinciden, antes de una sesion del Comite de Farmacia y Terapeutica.", prompt: "Como integro datos historicos y epidemiologicos sin reducir el problema a una sola fuente?", options: { historico: "Priorizar el consumo historico", epidemiologico: "Priorizar el perfil epidemiologico", combinar: "Combinar explicitamente ambos datos" } },
+    { id: "EXP10", point: "exp6-pedido-incompleto-proveedor", title: "El pedido que no llego completo", context: "Proveedor", situation: "El pedido de la semana llego incompleto; el proveedor ofrece completarlo si el Servicio acepta una condicion comercial no pactada.", prompt: "Que protegio al negociar: abastecimiento inmediato, reglas institucionales o trazabilidad?", options: { aceptar: "Aceptar la condicion comercial", rechazar: "Rechazar y negociar en otros terminos", escalar: "Escalar a la Subgerente antes de decidir" } },
+    { id: "EXP11", point: "exp16-oferta-trato-preferente", title: "La oferta que compro silencio", context: "Relacion con proveedores", situation: "Un proveedor ofrece una condicion comercial favorable a cambio de un trato preferente que compromete la objetividad de una evaluacion de proveedores.", prompt: "Que senales le indicaron que la oferta cruzaba un limite etico o administrativo?", options: { aceptar: "Aceptar las condiciones logisticas ofrecidas", rechazar: "Rechazar la oferta explicitamente", reportar: "Rechazar la oferta y reportar el hecho a la Subgerencia" } },
+    { id: "EXP12", point: "exp9-indicador-bajo-auditoria", title: "El indicador que faltaba", context: "Auditoria", situation: "Una auditora de la EPS pregunta por un indicador de gestion que el Servicio no ha construido de forma explicita todavia.", prompt: "Como respondio cuando la evidencia que debia existir aun no estaba formalizada?", options: { construir: "Construir el indicador en el momento", reconocer: "Reconocer abiertamente la carencia", consultar: "Solicitar un breve receso para consultar" } },
+    { id: "EXP13", point: "exp10-error-dispensacion-andres", title: "Lo que Andres no vio venir", context: "Error de dispensacion", situation: "Andres comete un error de dispensacion, entregando un medicamento con una concentracion distinta a la prescrita.", prompt: "Que hizo primero para proteger al paciente y al mismo tiempo sostener el aprendizaje del equipo?", options: { contactar: "Contactar al paciente de inmediato", verificar: "Verificar primero la magnitud real del riesgo", corregir: "Corregir la situacion con Andres primero" } },
+    { id: "EXP14", point: "exp8-visita-inspeccion-sorpresiva", title: "La visita que no avisa", context: "Inspeccion", situation: "Un inspector de la Secretaria de Salud llega sin previo aviso, en un momento de alta afluencia de pacientes.", prompt: "Como sostuvo la atencion al publico sin descuidar una visita oficial?", options: { suspender: "Suspender temporalmente la atencion al publico", paralelo: "Atender la visita y el mostrador en paralelo", delegar: "Delegar la atencion directa de la visita en Yesenia" } },
+    { id: "EXP15", point: "exp12-crisis-desabastecimiento", title: "Cuando todo falta al mismo tiempo", context: "Crisis de desabastecimiento", situation: "Un medicamento de alta rotacion se agota coincidiendo con un pico de demanda, con presion simultanea de varios frentes.", prompt: "Que priorizo al decidir como repartir el inventario restante bajo presion simultanea?", options: { cronicos: "Priorizar a los pacientes cronicos", proporcional: "Distribuir el inventario de forma proporcional", pausar: "Suspender temporalmente la dispensacion" } },
+    { id: "EXP16", point: "exp13-cierre-informe-gestion", title: "El informe que lleva su nombre", context: "Cierre de gestion", situation: "Llega el resultado consolidado de una inspeccion y una convocatoria de cierre de periodo con la Subgerente.", prompt: "Que dice su postura de cierre sobre como entiende su rol de mejora continua?", options: { proponer: "Presentar un plan de mejora propio", esperar: "Esperar instrucciones de la Subgerente", defender: "Defender exclusivamente lo ya hecho" } },
+    { id: "EXP17", point: "exp20-tipos-de-control", title: "Lo que se guarda por dentro", context: "Control interno", situation: "Discrepancias recurrentes en los conteos periodicos de un medicamento de alto valor, sin un hecho puntual grave.", prompt: "Que tipo de control eligio y que riesgo buscaba anticipar o detectar?", options: { preventivo: "Control preventivo", correctivo: "Control correctivo", combinado: "Control preventivo y detectivo combinados" } },
+    { id: "EXP18", point: "exp21-alerta-calidad-producto", title: "El defecto que no se ve a simple vista", context: "Calidad de producto", situation: "Un paciente reporta que un comprimido se ve distinto al de meses anteriores, sin confirmacion de laboratorio ni otros reportes.", prompt: "Como manejo una alerta con informacion incompleta sin normalizar un posible riesgo?", options: { escalar: "Escalar como posible falla de calidad", descartar: "Descartar como percepcion del paciente", retener: "Retener el lote especifico y verificar con el proveedor" } },
+    { id: "EXP19", point: "exp23-queja-formal-escrita", title: "La queja que llego por escrito", context: "PQRS", situation: "Un familiar de un paciente presenta una queja formal (PQRS) sobre el tiempo de espera, que exige respuesta escrita archivada.", prompt: "Como respondio por escrito sin ocultar el problema ni prometer lo que no podia cumplir?", options: { reconocer: "Responder con reconocimiento explicito de la demora", explicar: "Responder explicando las causas operativas de la demora", escalar: "Escalar la respuesta a la Subgerencia" } },
+    { id: "EXP20", point: "exp22-priorizacion-manual-sgc", title: "El manual que habia que escribir", context: "Sistema de gestion de calidad", situation: "Varios hallazgos operativos ya resueltos no quedaron formalizados en el manual de condiciones esenciales, con una revision de calidad acercandose.", prompt: "Que criterio uso para decidir que documentar primero en el manual?", options: { inventarios: "Documentar primero el control de inventarios", calidad: "Documentar primero la verificacion de calidad de producto", bitacora: "Documentar primero el registro y escalamiento general de hallazgos" } },
+    { id: "EXP21", point: "exp24-rastreo-lote-retirado", title: "El lote que hay que rastrear", context: "Retiro de lote", situation: "El fabricante emite una alerta de retiro de un lote ya dispensado parcialmente, con gravedad clinica todavia limitada en la informacion disponible.", prompt: "Como decidio el alcance del rastreo cuando la gravedad aun no estaba completamente definida?", options: { exhaustivo: "Rastreo exhaustivo inmediato", priorizado: "Rastreo priorizado", confirmar: "Confirmar internamente el alcance y preparar la comunicacion" } },
+    { id: "EXP22", point: "exp26-visita-seguimiento-auditoria", title: "La auditoria que vuelve", context: "Seguimiento de auditoria", situation: "Una auditora de la EPS anuncia una visita de seguimiento; hay ajustes practicos reales, pero no todos documentados formalmente todavia.", prompt: "Que valor dio a la evidencia practica frente a la documentacion formal pendiente?", options: { presentar: "Presentar los cambios tal como se implementaron", formalizar: "Formalizar primero la documentacion de los cambios", prorroga: "Solicitar una prorroga breve a la EPS" } },
+    { id: "EXP23", point: "exp25-indicador-vs-percepcion", title: "El indicador que no cuadra con el discurso", context: "Indicadores", situation: "El indicador de oportunidad de dispensacion empeora respecto al mes anterior, pero el equipo percibe que el flujo de atencion ha mejorado.", prompt: "Como sostuvo una conversacion basada en datos cuando la percepcion del equipo era distinta?", options: { comunicar: "Comunicar el resultado del indicador tal como esta", cuestionar: "Cuestionar la metodologia o el calculo del indicador", revisar: "Revisar los registros que alimentan el indicador" } },
+    { id: "EXP24", point: "exp5-comite-farmacia-terapeutica", title: "El Comite que decide que entra", context: "Comite de Farmacia y Terapeutica", situation: "El Comite de Farmacia y Terapeutica ya tiene sobre la mesa una propuesta de recorte presupuestal antes de que el DTR llegue a sustentar su posicion.", prompt: "Como decidio que ceder y que defender cuando el presupuesto no alcanzaba para todo?", options: { defender: "Defender el listado actual con datos duros", clasificar: "Proponer clasificacion ABC que priorice lo critico", ceder: "Ceder sin resistencia tecnica" } }
+  ];
+
+  var SCORE_MATRIX = {
+    "exp2-hallazgo-lote": {
+      inmediato: { tecnico: 3, normativo: 3, administrativo: 3, sistemico: 2 },
+      plan: { tecnico: 5, normativo: 5, administrativo: 4, sistemico: 5 },
+      escalar: { tecnico: 2, normativo: 4, administrativo: 3, sistemico: 3 }
+    },
+    "exp3-confusion-don-ernesto": {
+      tecnica: { tecnico: 4, normativo: 3, administrativo: 3, sistemico: 3 },
+      tranquilizar: { tecnico: 5, normativo: 4, administrativo: 4, sistemico: 5 },
+      remitir: { tecnico: 2, normativo: 3, administrativo: 2, sistemico: 2 }
+    },
+    "exp17-verificacion-presupuestal-compra": {
+      autorizar: { tecnico: 2, normativo: 1, administrativo: 2, sistemico: 1 },
+      verificar: { tecnico: 4, normativo: 5, administrativo: 5, sistemico: 5 },
+      extension: { tecnico: 3, normativo: 4, administrativo: 4, sistemico: 4 }
+    },
+    "exp4-conteo-control-especial": {
+      investigar: { tecnico: 4, normativo: 4, administrativo: 4, sistemico: 4 },
+      reportar: { tecnico: 3, normativo: 5, administrativo: 3, sistemico: 3 },
+      minimizar: { tecnico: 1, normativo: 0, administrativo: 1, sistemico: 0 }
+    },
+    "exp18-priorizacion-infraestructura-bodega": {
+      infraestructura: { tecnico: 4, normativo: 4, administrativo: 3, sistemico: 4 },
+      inventario: { tecnico: 3, normativo: 3, administrativo: 3, sistemico: 2 },
+      comite: { tecnico: 4, normativo: 4, administrativo: 5, sistemico: 5 }
+    },
+    "exp7-desviacion-cadena-frio": {
+      descartar: { tecnico: 3, normativo: 4, administrativo: 2, sistemico: 2 },
+      evaluar: { tecnico: 5, normativo: 4, administrativo: 4, sistemico: 5 },
+      cuarentena: { tecnico: 5, normativo: 5, administrativo: 4, sistemico: 5 }
+    },
+    "exp11-adherencia-don-ernesto": {
+      educar: { tecnico: 4, normativo: 4, administrativo: 4, sistemico: 5 },
+      remitir_medico: { tecnico: 3, normativo: 5, administrativo: 3, sistemico: 3 },
+      consultar_daniela: { tecnico: 5, normativo: 4, administrativo: 4, sistemico: 5 }
+    },
+    "exp19-distribucion-externa": {
+      resolver: { tecnico: 3, normativo: 3, administrativo: 3, sistemico: 2 },
+      investigar: { tecnico: 5, normativo: 4, administrativo: 4, sistemico: 5 },
+      delegar: { tecnico: 3, normativo: 3, administrativo: 4, sistemico: 4 }
+    },
+    "exp14-perfil-epidemiologico-consumo": {
+      historico: { tecnico: 3, normativo: 3, administrativo: 3, sistemico: 2 },
+      epidemiologico: { tecnico: 4, normativo: 4, administrativo: 3, sistemico: 3 },
+      combinar: { tecnico: 5, normativo: 5, administrativo: 4, sistemico: 5 }
+    },
+    "exp6-pedido-incompleto-proveedor": {
+      aceptar: { tecnico: 2, normativo: 1, administrativo: 2, sistemico: 1 },
+      rechazar: { tecnico: 4, normativo: 4, administrativo: 4, sistemico: 4 },
+      escalar: { tecnico: 3, normativo: 5, administrativo: 5, sistemico: 5 }
+    },
+    "exp16-oferta-trato-preferente": {
+      aceptar: { tecnico: 1, normativo: 0, administrativo: 1, sistemico: 0 },
+      rechazar: { tecnico: 4, normativo: 5, administrativo: 4, sistemico: 4 },
+      reportar: { tecnico: 5, normativo: 5, administrativo: 5, sistemico: 5 }
+    },
+    "exp9-indicador-bajo-auditoria": {
+      construir: { tecnico: 4, normativo: 3, administrativo: 4, sistemico: 4 },
+      reconocer: { tecnico: 3, normativo: 5, administrativo: 4, sistemico: 4 },
+      consultar: { tecnico: 3, normativo: 4, administrativo: 3, sistemico: 3 }
+    },
+    "exp10-error-dispensacion-andres": {
+      contactar: { tecnico: 5, normativo: 5, administrativo: 4, sistemico: 5 },
+      verificar: { tecnico: 4, normativo: 4, administrativo: 4, sistemico: 4 },
+      corregir: { tecnico: 2, normativo: 2, administrativo: 3, sistemico: 2 }
+    },
+    "exp8-visita-inspeccion-sorpresiva": {
+      suspender: { tecnico: 3, normativo: 4, administrativo: 2, sistemico: 2 },
+      paralelo: { tecnico: 4, normativo: 4, administrativo: 5, sistemico: 5 },
+      delegar: { tecnico: 2, normativo: 3, administrativo: 3, sistemico: 2 }
+    },
+    "exp12-crisis-desabastecimiento": {
+      cronicos: { tecnico: 5, normativo: 4, administrativo: 4, sistemico: 5 },
+      proporcional: { tecnico: 3, normativo: 3, administrativo: 4, sistemico: 3 },
+      pausar: { tecnico: 4, normativo: 5, administrativo: 2, sistemico: 3 }
+    },
+    "exp13-cierre-informe-gestion": {
+      proponer: { tecnico: 5, normativo: 4, administrativo: 5, sistemico: 5 },
+      esperar: { tecnico: 2, normativo: 3, administrativo: 2, sistemico: 2 },
+      defender: { tecnico: 3, normativo: 3, administrativo: 2, sistemico: 2 }
+    },
+    "exp20-tipos-de-control": {
+      preventivo: { tecnico: 4, normativo: 4, administrativo: 4, sistemico: 4 },
+      correctivo: { tecnico: 3, normativo: 3, administrativo: 3, sistemico: 2 },
+      combinado: { tecnico: 5, normativo: 5, administrativo: 5, sistemico: 5 }
+    },
+    "exp21-alerta-calidad-producto": {
+      escalar: { tecnico: 4, normativo: 5, administrativo: 4, sistemico: 4 },
+      descartar: { tecnico: 1, normativo: 1, administrativo: 2, sistemico: 1 },
+      retener: { tecnico: 5, normativo: 5, administrativo: 4, sistemico: 5 }
+    },
+    "exp23-queja-formal-escrita": {
+      reconocer: { tecnico: 4, normativo: 5, administrativo: 4, sistemico: 5 },
+      explicar: { tecnico: 3, normativo: 4, administrativo: 4, sistemico: 4 },
+      escalar: { tecnico: 2, normativo: 3, administrativo: 3, sistemico: 2 }
+    },
+    "exp22-priorizacion-manual-sgc": {
+      inventarios: { tecnico: 4, normativo: 4, administrativo: 4, sistemico: 4 },
+      calidad: { tecnico: 4, normativo: 5, administrativo: 4, sistemico: 4 },
+      bitacora: { tecnico: 5, normativo: 5, administrativo: 5, sistemico: 5 }
+    },
+    "exp24-rastreo-lote-retirado": {
+      exhaustivo: { tecnico: 5, normativo: 5, administrativo: 3, sistemico: 4 },
+      priorizado: { tecnico: 4, normativo: 4, administrativo: 5, sistemico: 5 },
+      confirmar: { tecnico: 3, normativo: 4, administrativo: 4, sistemico: 4 }
+    },
+    "exp26-visita-seguimiento-auditoria": {
+      presentar: { tecnico: 3, normativo: 3, administrativo: 4, sistemico: 3 },
+      formalizar: { tecnico: 5, normativo: 5, administrativo: 5, sistemico: 5 },
+      prorroga: { tecnico: 3, normativo: 4, administrativo: 3, sistemico: 3 }
+    },
+    "exp25-indicador-vs-percepcion": {
+      comunicar: { tecnico: 4, normativo: 4, administrativo: 4, sistemico: 4 },
+      cuestionar: { tecnico: 2, normativo: 2, administrativo: 2, sistemico: 1 },
+      revisar: { tecnico: 5, normativo: 5, administrativo: 5, sistemico: 5 }
+    },
+    "exp5-comite-farmacia-terapeutica": {
+      defender: { tecnico: 5, normativo: 4, administrativo: 4, sistemico: 4 },
+      clasificar: { tecnico: 5, normativo: 5, administrativo: 5, sistemico: 5 },
+      ceder: { tecnico: 1, normativo: 1, administrativo: 2, sistemico: 1 }
+    }
+  };
+
+  var PASTEL_THEMES = [
+    { soft: "#D8ECFF", strong: "#2C7DA0" },
+    { soft: "#DFF5E5", strong: "#4C9F70" },
+    { soft: "#FFF3C9", strong: "#B98512" },
+    { soft: "#FCE0DE", strong: "#C95C54" },
+    { soft: "#E8E2FF", strong: "#6F63B6" },
+    { soft: "#DDF4F2", strong: "#2C8C84" },
+    { soft: "#FFE6CC", strong: "#C8782E" },
+    { soft: "#E5F0FF", strong: "#4D78BE" },
+    { soft: "#F4E0F5", strong: "#9B5FA5" },
+    { soft: "#E8F6D8", strong: "#6E9A37" },
+    { soft: "#FFE3EA", strong: "#BF5574" },
+    { soft: "#DFF2FF", strong: "#357FA8" },
+    { soft: "#F6EAD7", strong: "#9D7344" },
+    { soft: "#E0F1E8", strong: "#4A8A68" },
+    { soft: "#FEE7D8", strong: "#C46C3D" },
+    { soft: "#E7E9FF", strong: "#5969BA" },
+    { soft: "#DDF7EF", strong: "#2D9271" },
+    { soft: "#FFF0B8", strong: "#AA8418" },
+    { soft: "#EEDFFC", strong: "#835CB8" },
+    { soft: "#DCEFF0", strong: "#3B8990" },
+    { soft: "#F8E2D0", strong: "#A96D3A" },
+    { soft: "#E3F3D8", strong: "#5D9137" },
+    { soft: "#F9DDE8", strong: "#B84F77" },
+    { soft: "#DCE8FF", strong: "#416DB8" }
+  ];
+
+  experiences.forEach(function (exp, index) {
+    exp.theme = PASTEL_THEMES[index % PASTEL_THEMES.length];
+  });
+
+  var state = loadState();
+  var currentIndex = 0;
+  var simTimers = [];
+  var sim = createSimState();
+
+  function $(selector) {
+    return document.querySelector(selector);
+  }
+
+  function createSimState() {
+    return {
+      location: "mostrador",
+      minutes: 7 * 60 + 58,
+      queue: 2,
+      folderOpen: false,
+      folderRead: false,
+      interruptionVisible: false,
+      interruptionResolved: null,
+      yeseniaTrust: 50,
+      andresTrust: 50,
+      compliance: 50,
+      autonomy: null,
+      dialogue: "Yesenia levanta la vista un momento: \"Buenos dias - ya casi organizo esto.\"",
+      ambientLog: ["El Servicio ya esta en marcha cuando usted llega."],
+      bitacora: []
+    };
+  }
+
+  function resetSimFromState() {
+    sim = createSimState();
+    var choice = state.decisions["exp2-hallazgo-lote"];
+    if (choice) {
+      sim.folderOpen = true;
+      sim.folderRead = true;
+      applySimDecisionEffects(choice, false);
+    }
+  }
+
+  function stopSimTimers() {
+    simTimers.forEach(function (timer) {
+      if (timer.type === "interval") window.clearInterval(timer.id);
+      if (timer.type === "timeout") window.clearTimeout(timer.id);
+    });
+    simTimers = [];
+  }
+
+  function startSimTimers() {
+    stopSimTimers();
+    simTimers.push({
+      type: "interval",
+      id: window.setInterval(function () {
+        sim.minutes += 1;
+        updateSimClock();
+      }, 4000)
+    });
+    simTimers.push({
+      type: "interval",
+      id: window.setInterval(function () {
+        var pool = [
+          "Yesenia despacha una formula en el mostrador.",
+          "Un carro de curaciones cruza el corredor hacia hospitalizacion.",
+          "Se escucha el eco de un llamado por altavoz, lejano.",
+          "Andres reacomoda cajas cerca de la bodega.",
+          "Una auxiliar de otro piso pregunta algo en el pasillo.",
+          "El reloj de la oficina marca otro minuto.",
+          "Alguien deja una formula nueva sobre el mostrador."
+        ];
+        sim.ambientLog.push(pool[Math.floor(Math.random() * pool.length)]);
+        sim.ambientLog = sim.ambientLog.slice(-4);
+        sim.queue = Math.max(0, Math.min(5, sim.queue + (Math.random() > 0.5 ? 1 : -1)));
+        renderSimScene();
+        renderSimFeed();
+      }, 7000)
+    });
+  }
+
+  function saveState() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (error) {}
+  }
+
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && parsed.version === 1) return parsed;
+      }
+    } catch (error) {}
+    return { version: 1, decisions: {}, reflections: {}, updatedAt: null };
+  }
+
+  function completedCount() {
+    return experiences.filter(function (exp) { return !!state.decisions[exp.point]; }).length;
+  }
+
+  function getDecisionScore(exp, choice) {
+    var byPoint = SCORE_MATRIX[exp.point] || {};
+    return byPoint[choice] || { tecnico: 0, normativo: 0, administrativo: 0, sistemico: 0 };
+  }
+
+  function calculateScores() {
+    var totals = { tecnico: 0, normativo: 0, administrativo: 0, sistemico: 0 };
+    var answered = 0;
+    experiences.forEach(function (exp) {
+      var choice = state.decisions[exp.point];
+      if (!choice) return;
+      var score = getDecisionScore(exp, choice);
+      totals.tecnico += score.tecnico;
+      totals.normativo += score.normativo;
+      totals.administrativo += score.administrativo;
+      totals.sistemico += score.sistemico;
+      answered += 1;
+    });
+    totals.total = totals.tecnico + totals.normativo + totals.administrativo + totals.sistemico;
+    totals.maxPerPillar = experiences.length * 5;
+    totals.maxTotal = experiences.length * 20;
+    totals.answered = answered;
+    totals.percent = totals.maxTotal ? Math.round(totals.total / totals.maxTotal * 100) : 0;
+    return totals;
+  }
+
+  function scoreBand(percent) {
+    if (percent >= 85) return "Solido";
+    if (percent >= 70) return "En consolidacion";
+    if (percent >= 55) return "Basico";
+    return "Requiere refuerzo";
+  }
+
+  function pillarFeedback(scores) {
+    var pillars = [
+      { key: "tecnico", label: "pilar tecnico", value: scores.tecnico },
+      { key: "normativo", label: "pilar normativo", value: scores.normativo },
+      { key: "administrativo", label: "pilar administrativo", value: scores.administrativo },
+      { key: "sistemico", label: "pensamiento sistemico", value: scores.sistemico }
+    ].sort(function (a, b) { return a.value - b.value; });
+    var low = pillars[0];
+    var high = pillars[pillars.length - 1];
+    return "Tu mayor fortaleza aparece en " + high.label + ". El foco de mejora esta en " + low.label + ": revisa si tus decisiones estan conectando evidencia, cumplimiento, recursos y consecuencias futuras del servicio.";
+  }
+
+  function renderScoreSummary() {
+    var host = $("#inmersa-score-summary");
+    if (!host) return;
+    var scores = calculateScores();
+    if (scores.answered === 0) {
+      host.innerHTML = "";
+      return;
+    }
+    var complete = scores.answered === experiences.length;
+    host.innerHTML =
+      '<div class="inmersa-panel p-3 p-md-4 mb-3">' +
+      '<div class="d-flex flex-column flex-md-row justify-content-between mb-3">' +
+      '<div><div class="inmersa-eyebrow">Puntaje por pilares</div><h3 class="h5 mb-1">' + (complete ? 'Resultado final' : 'Avance parcial') + '</h3><p class="inmersa-muted mb-0">Pensamiento sistemico se valora de forma transversal en todas las decisiones.</p></div>' +
+      '<div class="mt-3 mt-md-0 text-md-right"><div class="inmersa-score-value">' + scores.percent + '%</div><div class="inmersa-muted">' + scoreBand(scores.percent) + '</div></div>' +
+      '</div>' +
+      '<div class="inmersa-score-grid">' +
+      scorePill("Tecnico", scores.tecnico, scores.maxPerPillar) +
+      scorePill("Normativo", scores.normativo, scores.maxPerPillar) +
+      scorePill("Administrativo", scores.administrativo, scores.maxPerPillar) +
+      scorePill("Sistemico", scores.sistemico, scores.maxPerPillar) +
+      '</div>' +
+      (complete ? '<div class="inmersa-score-note mt-3">' + escapeHtml(pillarFeedback(scores)) + '</div>' : '<p class="inmersa-muted inmersa-tiny mt-3 mb-0">Completa las 24 experiencias para recibir retroalimentacion final.</p>') +
+      '</div>';
+  }
+
+  function scorePill(label, value, max) {
+    return '<div class="inmersa-score-pill"><div class="inmersa-eyebrow">' + escapeHtml(label) + '</div><div class="inmersa-score-value">' + value + '</div><div class="inmersa-muted inmersa-tiny">de ' + max + '</div></div>';
+  }
+
+  function updateProgress() {
+    var done = completedCount();
+    $("#inmersa-progress-label").textContent = done + " / " + experiences.length + " completadas";
+    $("#inmersa-progress-fill").style.width = Math.round((done / experiences.length) * 100) + "%";
+    renderScoreSummary();
+  }
+
+  function experienceLabel(exp) {
+    return "Experiencia " + String(exp.id).replace("EXP", "");
+  }
+
+  function applyExperienceTheme(exp) {
+    var root = document.getElementById("inmersa-moodle-app");
+    var theme = exp && exp.theme ? exp.theme : { soft: "#D8ECFF", strong: "#2C7DA0" };
+    root.style.setProperty("--inmersa-exp", theme.soft);
+    root.style.setProperty("--inmersa-exp-strong", theme.strong);
+  }
+
+  function show(viewId) {
+    if (viewId !== "inmersa-view-experience") stopSimTimers();
+    ["catalog", "experience", "teacher", "reviewed"].forEach(function (name) {
+      $("#inmersa-view-" + name).classList.toggle("inmersa-hidden", "inmersa-view-" + name !== viewId);
+    });
+    updateProgress();
+  }
+
+  function renderCatalog() {
+    applyExperienceTheme(null);
+    var container = $("#inmersa-cards");
+    container.innerHTML = "";
+    experiences.forEach(function (exp, index) {
+      var decision = state.decisions[exp.point];
+      var col = document.createElement("div");
+      col.className = "col-md-6 col-lg-4 mb-3";
+      col.innerHTML =
+        '<article class="inmersa-card p-3 h-100 d-flex flex-column" style="background:' + escapeHtml(exp.theme.soft) + '; border-left: 6px solid ' + escapeHtml(exp.theme.strong) + ';">' +
+        '<div class="d-flex justify-content-between align-items-start mb-2">' +
+        '<span class="inmersa-eyebrow mb-0">' + escapeHtml(experienceLabel(exp)) + '</span>' +
+        '<span class="inmersa-badge ' + (decision ? 'inmersa-badge-complete' : '') + '">' + (decision ? 'Completada' : 'Pendiente') + '</span>' +
+        '</div>' +
+        '<h3 class="h6 font-weight-bold">' + escapeHtml(exp.title) + '</h3>' +
+        '<p class="inmersa-muted inmersa-tiny flex-grow-1">' + escapeHtml(exp.situation) + '</p>' +
+        '<button class="btn inmersa-btn-ghost btn-sm align-self-start" type="button" data-open-index="' + index + '">' + (decision ? 'Revisitar' : 'Abrir') + '</button>' +
+        '</article>';
+      container.appendChild(col);
+    });
+    updateProgress();
+  }
+
+  function openExperience(index) {
+    currentIndex = index;
+    var exp = experiences[index];
+    var selected = state.decisions[exp.point] || null;
+    applyExperienceTheme(exp);
+    $("#inmersa-exp-kicker").textContent = experienceLabel(exp) + " - " + exp.context;
+    $("#inmersa-exp-title").textContent = exp.title;
+    $("#inmersa-exp-situation").textContent = exp.situation;
+    $("#inmersa-exp-context").textContent = exp.immersive ? "Usted esta en turno: el mostrador sigue andando mientras identifica que requiere su atencion." : "Usted actua como Director Tecnico del Servicio Farmaceutico. La decision queda registrada como produccion del estudiante.";
+    $("#inmersa-reflection-label").textContent = exp.prompt;
+    $("#inmersa-reflection-text").value = state.reflections[exp.point] || "";
+    if (exp.immersive) resetSimFromState();
+    if (!exp.immersive) stopSimTimers();
+    renderDecisionArea(exp, selected);
+    renderMetrics(exp, selected);
+    show("inmersa-view-experience");
+    if (exp.immersive) startSimTimers();
+  }
+
+  function formatSimClock() {
+    var h = Math.floor(sim.minutes / 60) % 24;
+    var m = sim.minutes % 60;
+    return String(h).padStart(2, "0") + ":" + String(m).padStart(2, "0") + " a. m.";
+  }
+
+  function updateSimClock() {
+    var clock = $("#inmersa-sim-clock");
+    if (clock) clock.textContent = formatSimClock();
+  }
+
+  function renderImmersiveExperience(exp, selected) {
+    var area = $("#inmersa-decision-area");
+    $("#inmersa-current-choice").textContent = selected ? exp.options[selected] : "Pendiente";
+    $("#inmersa-reflection-area").classList.toggle("inmersa-hidden", !selected);
+    area.innerHTML =
+      '<div class="inmersa-sim">' +
+      '<div class="inmersa-sim-bar">' +
+      '<div><strong>Hospital San Juan de Dios</strong> <span class="inmersa-muted">/ Servicio Farmaceutico de Baja Complejidad</span></div>' +
+      '<div><span id="inmersa-sim-clock">' + escapeHtml(formatSimClock()) + '</span> <button class="inmersa-btn-link" type="button" data-sim-action="bitacora">Bitacora</button></div>' +
+      '</div>' +
+      '<div class="inmersa-sim-body">' +
+      '<div class="inmersa-sim-main">' +
+      '<div id="inmersa-sim-scene"></div>' +
+      '<div id="inmersa-sim-dialogue"></div>' +
+      '<div id="inmersa-sim-interruption" class="mt-3"></div>' +
+      '<div id="inmersa-sim-document" class="mt-3"></div>' +
+      '<div id="inmersa-sim-decision" class="mt-3"></div>' +
+      '<div id="inmersa-sim-result" class="mt-3"></div>' +
+      '</div>' +
+      '<aside class="inmersa-service-feed" id="inmersa-sim-feed"></aside>' +
+      '</div>' +
+      '</div>';
+    renderSimScene();
+    renderSimDialogue();
+    renderSimInterruption();
+    renderSimDocument();
+    renderSimDecision(exp, selected);
+    renderSimResult(exp, selected);
+    renderSimFeed();
+  }
+
+  function renderSimScene() {
+    var host = $("#inmersa-sim-scene");
+    if (!host) return;
+    var queueDots = "";
+    for (var i = 0; i < sim.queue; i += 1) {
+      queueDots += '<span class="inmersa-queue-dot" title="Persona esperando en fila" style="animation-delay:' + (i * 300) + 'ms"></span>';
+    }
+    if (sim.location === "archivo") {
+      host.innerHTML =
+        '<div class="inmersa-scene is-archivo">' +
+        '<button class="inmersa-btn-link" type="button" data-sim-action="go-counter">volver al mostrador</button>' +
+        '<div class="inmersa-folder-zone">' +
+        '<button type="button" class="inmersa-folder ' + (sim.folderOpen ? 'is-open' : '') + '" data-sim-action="open-folder" ' + (sim.folderOpen ? 'disabled' : '') + '>' + (sim.folderOpen ? 'ABIERTA' : 'CARPETA') + '</button>' +
+        '<div class="inmersa-muted inmersa-tiny">' + (sim.folderOpen ? 'Carpeta del turno anterior - pendiente de cierre' : 'Carpeta cerrada sobre el escritorio - pulse para abrir') + '</div>' +
+        '</div>' +
+        '<div class="inmersa-andres"><span class="inmersa-andres-avatar">A</span><span>' + (sim.andresTrust > 55 ? 'Andres, mas suelto' : 'Andres, ordenando cajas') + '</span></div>' +
+        '</div>';
+      return;
+    }
+    host.innerHTML =
+      '<div class="inmersa-scene">' +
+      '<div class="inmersa-person inmersa-yesenia"><button type="button" class="inmersa-avatar" data-sim-action="talk-yesenia">Y</button><span>Yesenia</span></div>' +
+      '<div class="inmersa-queue">' + queueDots + '</div>' +
+      '<div class="inmersa-andres"><span class="inmersa-andres-avatar">A</span><span>' + (sim.andresTrust > 55 ? 'Andres, mas suelto' : 'Andres, ordenando cajas') + '</span></div>' +
+      '<div class="inmersa-counter"><button class="btn inmersa-btn-ghost btn-sm" type="button" data-sim-action="go-archive">Ir al archivo</button><span class="inmersa-phone-rest">telefono en reposo</span></div>' +
+      '</div>';
+  }
+
+  function renderSimDialogue() {
+    var host = $("#inmersa-sim-dialogue");
+    if (!host) return;
+    host.innerHTML = sim.dialogue ? '<div class="inmersa-dialogue">' + escapeHtml(sim.dialogue) + '</div>' : "";
+  }
+
+  function renderSimInterruption() {
+    var host = $("#inmersa-sim-interruption");
+    if (!host) return;
+    if (!sim.interruptionVisible) {
+      host.innerHTML = "";
+      return;
+    }
+    host.innerHTML =
+      '<div class="inmersa-interruption">' +
+      '<div class="font-weight-bold mb-1">Andres (desde el mostrador)</div>' +
+      '<div class="mb-3">"Perdon que interrumpa - hay un cliente con una duda y no se bien que decirle."</div>' +
+      '<button class="btn inmersa-btn-primary btn-sm mr-2 mb-2" type="button" data-sim-action="help-now">Bajar a atender ahora</button>' +
+      '<button class="btn inmersa-btn-ghost btn-sm mb-2" type="button" data-sim-action="finish-first">Terminar esto primero</button>' +
+      '</div>';
+  }
+
+  function renderSimDocument() {
+    var host = $("#inmersa-sim-document");
+    if (!host) return;
+    if (!(sim.location === "archivo" && sim.folderOpen && !sim.folderRead)) {
+      host.innerHTML = "";
+      return;
+    }
+    host.innerHTML =
+      '<div class="inmersa-paper">' +
+      '<div class="inmersa-eyebrow">Registro de vencimientos - anotacion manuscrita</div>' +
+      '<p>"Lote BTX-118 vence en 9 dias. Pendiente de mover a cuarentena. No alcance a cerrarlo antes del cambio de turno."</p>' +
+      '<button class="btn inmersa-btn-primary btn-sm" type="button" data-sim-action="read-folder">Terminar de revisar</button>' +
+      '</div>';
+  }
+
+  function renderSimDecision(exp, selected) {
+    var host = $("#inmersa-sim-decision");
+    if (!host) return;
+    if (!sim.folderRead || selected) {
+      host.innerHTML = "";
+      return;
+    }
+    var html = '<div class="inmersa-panel p-3"><div class="inmersa-eyebrow">Que hace con el hallazgo?</div>';
+    Object.keys(exp.options).forEach(function (key) {
+      html += '<button class="inmersa-option" type="button" data-choice="' + key + '"><span class="inmersa-option-title">' + escapeHtml(exp.options[key]) + '</span><span class="inmersa-option-detail">' + escapeHtml(simOptionDetail(key)) + '</span></button>';
+    });
+    html += '</div>';
+    host.innerHTML = html;
+  }
+
+  function renderSimResult(exp, selected) {
+    var host = $("#inmersa-sim-result");
+    if (!host) return;
+    if (!selected) {
+      host.innerHTML = "";
+      return;
+    }
+    var autonomy = sim.autonomy == null ? "todavia sin resolver" : "resuelta (" + sim.autonomy + ")";
+    var score = getDecisionScore(exp, selected);
+    host.innerHTML =
+      '<div class="inmersa-sim-status">' +
+      '<div><strong>Decision registrada:</strong> ' + escapeHtml(exp.options[selected]) + '</div>' +
+      '<div>Confianza de Yesenia: <strong>' + sim.yeseniaTrust + '</strong> / Cumplimiento normativo: <strong>' + sim.compliance + '</strong></div>' +
+      '<div>Puntaje por pilares: tecnico <strong>' + score.tecnico + '/5</strong>, normativo <strong>' + score.normativo + '/5</strong>, administrativo <strong>' + score.administrativo + '/5</strong>, sistemico <strong>' + score.sistemico + '/5</strong></div>' +
+      '<div>Consecuencia pendiente para Experiencia 11: <strong>' + escapeHtml(autonomy) + '</strong></div>' +
+      '</div>';
+  }
+
+  function renderSimFeed() {
+    var host = $("#inmersa-sim-feed");
+    if (!host) return;
+    var lines = sim.ambientLog.map(function (line) {
+      return '<div class="inmersa-feed-line">' + escapeHtml(line) + '</div>';
+    }).join("");
+    host.innerHTML =
+      '<div class="inmersa-eyebrow">El Servicio, ahora mismo</div>' +
+      '<div class="mb-3">Fila en mostrador: <strong>' + sim.queue + '</strong> persona' + (sim.queue === 1 ? '' : 's') + '</div>' +
+      lines +
+      '<hr>' +
+      '<div class="inmersa-tiny">Interrupcion: <strong>' + escapeHtml(sim.interruptionResolved || "pendiente") + '</strong></div>';
+  }
+
+  function scheduleSimInterruption() {
+    simTimers.push({
+      type: "timeout",
+      id: window.setTimeout(function () {
+        if (currentIndex === 0 && sim.folderOpen && !sim.interruptionResolved && !sim.interruptionVisible) {
+          sim.interruptionVisible = true;
+          renderSimInterruption();
+        }
+      }, 6000)
+    });
+  }
+
+  function handleSimAction(action) {
+    var exp = experiences[currentIndex];
+    if (!exp || !exp.immersive) return;
+    if (action === "go-archive") {
+      sim.location = "archivo";
+      sim.dialogue = "El archivo esta en penumbra. Sobre el escritorio, una carpeta sin cerrar asoma entre los papeles del turno anterior.";
+    }
+    if (action === "go-counter") {
+      sim.location = "mostrador";
+      sim.dialogue = sim.interruptionResolved ? "Yesenia lo ve regresar y asiente, sin dejar de atender." : "Yesenia levanta la vista un momento: \"Buenos dias - ya casi organizo esto.\"";
+    }
+    if (action === "talk-yesenia") {
+      sim.dialogue = sim.yeseniaTrust > 55 ? "Yesenia sonrie de lado: \"Con usted esto se siente mas ordenado.\"" : "Yesenia sigue trabajando, cordial pero breve: \"Digame.\"";
+    }
+    if (action === "open-folder" && !sim.folderOpen) {
+      sim.folderOpen = true;
+      sim.dialogue = "";
+      scheduleSimInterruption();
+    }
+    if (action === "read-folder") {
+      sim.folderRead = true;
+    }
+    if (action === "help-now") {
+      sim.interruptionVisible = false;
+      sim.interruptionResolved = "atendida ahora";
+      sim.queue = Math.max(0, sim.queue - 1);
+      sim.andresTrust = Math.min(100, sim.andresTrust + 6);
+      sim.bitacora.push("Interrumpio la revision del archivo para apoyar a Andres en el mostrador antes de continuar.");
+    }
+    if (action === "finish-first") {
+      sim.interruptionVisible = false;
+      sim.interruptionResolved = "terminar primero";
+      sim.andresTrust = Math.max(0, sim.andresTrust - 4);
+      sim.bitacora.push("Le pidio a Andres un momento mas para terminar de revisar el archivo antes de bajar a apoyar.");
+    }
+    if (action === "resolve-future") {
+      sim.autonomy = sim.autonomy == null ? Math.max(0, Math.min(100, 50 + futureAutonomyDelta(state.decisions[exp.point]))) : sim.autonomy;
+    }
+    if (action === "trace") {
+      sim.dialogue = "Trazabilidad: decision=exp2-hallazgo-lote / evento=lote-BTX-118 / delta=autonomia-subgerente.";
+    }
+    if (action === "bitacora") {
+      var text = sim.bitacora.length ? sim.bitacora.join(" | ") : "Todavia no hay nada que anotar: la bitacora se construye con lo que usted haga.";
+      window.alert(text);
+    }
+    renderImmersiveExperience(exp, state.decisions[exp.point] || null);
+    renderMetrics(exp, state.decisions[exp.point] || null);
+  }
+
+  function simOptionDetail(key) {
+    if (key === "inmediato") return "Separar el lote y cerrar el registro usted mismo, ahora.";
+    if (key === "plan") return "Dejar constancia formal antes de intervenir sobre el lote.";
+    if (key === "escalar") return "Informar antes de tomar cualquier accion directa.";
+    return optionDetail(key);
+  }
+
+  function applySimDecisionEffects(choice, addLog) {
+    var effects = {
+      inmediato: { compliance: 60, yeseniaTrust: 54, dialogue: "Usted separa el lote y ajusta el registro ahi mismo. Yesenia observa: \"Rapido. Ojala siempre fuera tan sencillo.\"", log: "Resolvio de inmediato el hallazgo del lote proximo a vencer, sin escalarlo ni documentarlo primero." },
+      plan: { compliance: 66, yeseniaTrust: 60, dialogue: "Usted anota el hallazgo, marca el lote y define dos pasos para esta semana. Yesenia asiente: \"Asi se hacia antes. Que alivio.\"", log: "Documento el hallazgo y trazo un plan de choque antes de actuar, dejando constancia formal del pendiente heredado." },
+      escalar: { compliance: 56, yeseniaTrust: 44, dialogue: "Usted redacta un correo breve a la Subgerencia. Yesenia se queda callada un segundo: \"Ya? Bueno... usted sabra.\"", log: "Escalo el hallazgo a la Subgerencia Administrativa antes de intervenir directamente sobre el lote." }
+    };
+    var effect = effects[choice];
+    if (!effect) return;
+    sim.compliance = effect.compliance;
+    sim.yeseniaTrust = effect.yeseniaTrust;
+    sim.dialogue = effect.dialogue;
+    if (addLog) {
+      sim.bitacora.push(effect.log);
+      sim.bitacora.push("El lote quedo marcado en el registro; lo ocurrido hoy podra notarse en como reacciona el equipo mas adelante.");
+    }
+  }
+
+  function futureAutonomyDelta(choice) {
+    if (choice === "plan") return 12;
+    if (choice === "inmediato") return 4;
+    if (choice === "escalar") return -8;
+    return 0;
+  }
+
+  function renderDecisionArea(exp, selected) {
+    if (exp.immersive) {
+      renderImmersiveExperience(exp, selected);
+      return;
+    }
+    var area = $("#inmersa-decision-area");
+    area.innerHTML = "";
+    $("#inmersa-current-choice").textContent = selected ? exp.options[selected] : "Pendiente";
+    $("#inmersa-reflection-area").classList.toggle("inmersa-hidden", !selected);
+
+    if (selected) {
+      var result = document.createElement("div");
+      var score = getDecisionScore(exp, selected);
+      result.className = "inmersa-alert";
+      result.innerHTML = '<strong>Decision registrada:</strong> ' + escapeHtml(exp.options[selected]) + '<br><span class="inmersa-tiny">Puntaje: tecnico ' + score.tecnico + '/5, normativo ' + score.normativo + '/5, administrativo ' + score.administrativo + '/5, sistemico ' + score.sistemico + '/5. Puede revisar la reflexion o elegir otra opcion para actualizar esta experiencia.</span>';
+      area.appendChild(result);
+    }
+
+    var block = document.createElement("div");
+    block.className = "mt-3";
+    block.innerHTML = '<div class="inmersa-eyebrow">Opciones de decision</div>';
+    Object.keys(exp.options).forEach(function (key) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "inmersa-option";
+      button.setAttribute("data-choice", key);
+      button.innerHTML = '<span class="inmersa-option-title">' + escapeHtml(exp.options[key]) + '</span><span class="inmersa-option-detail">' + optionDetail(key) + '</span>';
+      block.appendChild(button);
+    });
+    area.appendChild(block);
+  }
+
+  function renderMetrics(exp, selected) {
+    var score = selected ? getDecisionScore(exp, selected) : null;
+    if (exp.immersive) {
+      $("#inmersa-metrics").innerHTML =
+        '<tr><td>Confianza de Yesenia</td><td class="text-right"><strong>' + sim.yeseniaTrust + '</strong></td></tr>' +
+        '<tr><td>Confianza de Andres</td><td class="text-right"><strong>' + sim.andresTrust + '</strong></td></tr>' +
+        '<tr><td>Cumplimiento normativo</td><td class="text-right"><strong>' + sim.compliance + '</strong></td></tr>' +
+        '<tr><td>Fila actual</td><td class="text-right"><strong>' + sim.queue + '</strong></td></tr>' +
+        (score ? '<tr><td>Pilar tecnico</td><td class="text-right"><strong>' + score.tecnico + '/5</strong></td></tr><tr><td>Pilar normativo</td><td class="text-right"><strong>' + score.normativo + '/5</strong></td></tr><tr><td>Pilar administrativo</td><td class="text-right"><strong>' + score.administrativo + '/5</strong></td></tr><tr><td>Pensamiento sistemico</td><td class="text-right"><strong>' + score.sistemico + '/5</strong></td></tr>' : '');
+      return;
+    }
+    var base = selected ? 62 + (Object.keys(exp.options).indexOf(selected) * 4) : 50;
+    $("#inmersa-metrics").innerHTML =
+      '<tr><td>Rigor de gestion</td><td class="text-right"><strong>' + base + '</strong></td></tr>' +
+      '<tr><td>Trazabilidad</td><td class="text-right"><strong>' + (selected ? "Registrada" : "Pendiente") + '</strong></td></tr>' +
+      '<tr><td>Reflexion</td><td class="text-right"><strong>' + ((state.reflections[exp.point] || "").trim() ? "Guardada" : "Sin texto") + '</strong></td></tr>' +
+      (score ? '<tr><td>Pilar tecnico</td><td class="text-right"><strong>' + score.tecnico + '/5</strong></td></tr><tr><td>Pilar normativo</td><td class="text-right"><strong>' + score.normativo + '/5</strong></td></tr><tr><td>Pilar administrativo</td><td class="text-right"><strong>' + score.administrativo + '/5</strong></td></tr><tr><td>Pensamiento sistemico</td><td class="text-right"><strong>' + score.sistemico + '/5</strong></td></tr>' : '');
+  }
+
+  function chooseDecision(choice) {
+    var exp = experiences[currentIndex];
+    state.decisions[exp.point] = choice;
+    if (exp.immersive) applySimDecisionEffects(choice, true);
+    state.updatedAt = new Date().toISOString();
+    saveState();
+    renderDecisionArea(exp, choice);
+    renderMetrics(exp, choice);
+    updateProgress();
+  }
+
+  function saveReflection() {
+    var exp = experiences[currentIndex];
+    state.reflections[exp.point] = $("#inmersa-reflection-text").value;
+    state.updatedAt = new Date().toISOString();
+    saveState();
+    $("#inmersa-save-state").textContent = "Reflexion guardada.";
+    window.setTimeout(function () {
+      $("#inmersa-save-state").textContent = "La reflexion se guarda en este navegador.";
+    }, 1800);
+  }
+
+  function nextExperience() {
+    saveReflection();
+    var next = Math.min(currentIndex + 1, experiences.length - 1);
+    if (currentIndex === experiences.length - 1) {
+      renderCatalog();
+      show("inmersa-view-catalog");
+      return;
+    }
+    openExperience(next);
+  }
+
+  function firstPendingIndex() {
+    for (var i = 0; i < experiences.length; i += 1) {
+      if (!state.decisions[experiences[i].point]) return i;
+    }
+    return experiences.length - 1;
+  }
+
+  function exportSession() {
+    var resumenPuntaje = calculateScores();
+    var payload = {
+      tipoSesion: "inmersa-sesion-estudiante",
+      version: 1,
+      identificador: "Sesion INMERSA - " + new Date().toLocaleString("es-CO"),
+      exportadoEn: new Date().toISOString(),
+      puntaje: {
+        pilares: {
+          tecnico: resumenPuntaje.tecnico,
+          normativo: resumenPuntaje.normativo,
+          administrativo: resumenPuntaje.administrativo,
+          sistemico: resumenPuntaje.sistemico
+        },
+        total: resumenPuntaje.total,
+        maximo: resumenPuntaje.maxTotal,
+        porcentaje: resumenPuntaje.percent,
+        retroalimentacion: resumenPuntaje.answered === experiences.length ? pillarFeedback(resumenPuntaje) : "Sesion incompleta: falta terminar experiencias para retroalimentacion final."
+      },
+      produccion: experiences.map(function (exp) {
+        var decisionKey = state.decisions[exp.point] || null;
+        var score = decisionKey ? getDecisionScore(exp, decisionKey) : null;
+        return {
+          id: exp.id,
+          puntoDecision: exp.point,
+          titulo: exp.title,
+          situacion: exp.situation,
+          decisionContexto: decisionKey,
+          decisionTexto: decisionKey ? exp.options[decisionKey] : null,
+          puntajeDecision: score,
+          reflexion: state.reflections[exp.point] || "",
+          completada: !!decisionKey
+        };
+      })
+    };
+    downloadJson(payload, "inmersa-mi-sesion.json");
+  }
+
+  function renderTeacher() {
+    var feedback = loadFeedback();
+    var tbody = $("#inmersa-teacher-table");
+    tbody.innerHTML = "";
+    experiences.forEach(function (exp) {
+      var decisionKey = state.decisions[exp.point];
+      var score = decisionKey ? getDecisionScore(exp, decisionKey) : null;
+      var scoreText = score ? "T " + score.tecnico + " / N " + score.normativo + " / A " + score.administrativo + " / S " + score.sistemico : "Sin puntaje";
+      var tr = document.createElement("tr");
+      tr.innerHTML =
+        '<td><strong>' + escapeHtml(experienceLabel(exp)) + '</strong><br><span class="inmersa-tiny">' + escapeHtml(exp.title) + '</span></td>' +
+        '<td>' + escapeHtml(decisionKey ? exp.options[decisionKey] : "Sin decision") + '</td>' +
+        '<td class="inmersa-tiny">' + escapeHtml(scoreText) + '</td>' +
+        '<td class="inmersa-tiny">' + escapeHtml(state.reflections[exp.point] || "Sin reflexion") + '</td>' +
+        '<td><textarea class="form-control form-control-sm" rows="2" data-feedback="' + escapeHtml(exp.point) + '" placeholder="Escriba retroalimentacion...">' + escapeHtml(feedback[exp.point] || "") + '</textarea></td>';
+      tbody.appendChild(tr);
+    });
+    show("inmersa-view-teacher");
+  }
+
+  function loadFeedback() {
+    try {
+      return JSON.parse(localStorage.getItem(FEEDBACK_KEY) || "{}");
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function saveFeedback() {
+    var feedback = {};
+    document.querySelectorAll("[data-feedback]").forEach(function (field) {
+      feedback[field.getAttribute("data-feedback")] = field.value;
+    });
+    try { localStorage.setItem(FEEDBACK_KEY, JSON.stringify(feedback)); } catch (error) {}
+    return feedback;
+  }
+
+  function exportReviewed() {
+    var feedback = saveFeedback();
+    var resumenPuntaje = calculateScores();
+    var payload = {
+      tipoSesion: "inmersa-sesion-revisada",
+      version: 1,
+      identificador: "Revision INMERSA - " + new Date().toLocaleString("es-CO"),
+      exportadoEn: new Date().toISOString(),
+      retroalimentaciones: feedback,
+      puntaje: {
+        pilares: {
+          tecnico: resumenPuntaje.tecnico,
+          normativo: resumenPuntaje.normativo,
+          administrativo: resumenPuntaje.administrativo,
+          sistemico: resumenPuntaje.sistemico
+        },
+        total: resumenPuntaje.total,
+        maximo: resumenPuntaje.maxTotal,
+        porcentaje: resumenPuntaje.percent,
+        retroalimentacion: resumenPuntaje.answered === experiences.length ? pillarFeedback(resumenPuntaje) : "Sesion incompleta."
+      },
+      produccion: experiences.map(function (exp) {
+        var decisionKey = state.decisions[exp.point] || null;
+        var score = decisionKey ? getDecisionScore(exp, decisionKey) : null;
+        return {
+          id: exp.id,
+          titulo: exp.title,
+          situacion: exp.situation,
+          decisionTexto: decisionKey ? exp.options[decisionKey] : null,
+          puntajeDecision: score,
+          reflexion: state.reflections[exp.point] || "",
+          completada: !!decisionKey
+        };
+      })
+    };
+    downloadJson(payload, "inmersa-sesion-revisada.json");
+  }
+
+  function importReviewed(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(String(reader.result));
+        if (!data || data.tipoSesion !== "inmersa-sesion-revisada" || !Array.isArray(data.produccion)) {
+          throw new Error("El archivo no parece ser una sesion revisada de INMERSA.");
+        }
+        renderReviewed(data);
+      } catch (error) {
+        $("#inmersa-import-error").textContent = error.message || "No se pudo abrir el archivo.";
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function renderReviewed(data) {
+    $("#inmersa-reviewed-title").textContent = data.identificador || "Retroalimentacion recibida";
+    var list = $("#inmersa-reviewed-list");
+    list.innerHTML = "";
+    data.produccion.forEach(function (item) {
+      var point = findPointById(item.id);
+      var feedback = data.retroalimentaciones && point ? data.retroalimentaciones[point] : "";
+      var score = item.puntajeDecision;
+      var scoreLine = score ? '<p class="inmersa-muted inmersa-tiny"><strong>Puntaje:</strong> tecnico ' + escapeHtml(score.tecnico) + '/5, normativo ' + escapeHtml(score.normativo) + '/5, administrativo ' + escapeHtml(score.administrativo) + '/5, sistemico ' + escapeHtml(score.sistemico) + '/5</p>' : '';
+      var div = document.createElement("div");
+      div.className = "inmersa-card p-3 mb-3";
+      div.innerHTML =
+        '<div class="inmersa-eyebrow">' + escapeHtml(item.id || "") + '</div>' +
+        '<h3 class="h6 font-weight-bold">' + escapeHtml(item.titulo || "Experiencia") + '</h3>' +
+        '<p class="inmersa-muted mb-2"><strong>Tu decision:</strong> ' + escapeHtml(item.decisionTexto || "Sin decision registrada") + '</p>' +
+        scoreLine +
+        '<p class="inmersa-muted inmersa-tiny"><strong>Tu reflexion:</strong> ' + escapeHtml(item.reflexion || "Sin reflexion registrada") + '</p>' +
+        (feedback ? '<div class="inmersa-alert mt-2"><strong>Retroalimentacion docente:</strong><br>' + escapeHtml(feedback) + '</div>' : '');
+      list.appendChild(div);
+    });
+    show("inmersa-view-reviewed");
+  }
+
+  function findPointById(id) {
+    var found = experiences.filter(function (exp) { return exp.id === id; })[0];
+    return found ? found.point : null;
+  }
+
+  function downloadJson(payload, filename) {
+    var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function optionDetail(key) {
+    var details = {
+      inmediato: "Actua rapido y deja el caso resuelto en el momento.",
+      plan: "Documenta antes de actuar y deja trazabilidad.",
+      escalar: "Traslada el caso a un nivel superior de decision.",
+      verificar: "Contrasta informacion antes de comprometer recursos.",
+      reconocer: "Hace visible la carencia y evita improvisar evidencia.",
+      combinado: "Integra controles para prevenir y detectar desviaciones."
+    };
+    return details[key] || "Seleccione esta ruta y registre su razonamiento.";
+  }
+
+  function resetState() {
+    if (!window.confirm("Desea borrar las decisiones y reflexiones guardadas en este navegador?")) return;
+    state = { version: 1, decisions: {}, reflections: {}, updatedAt: null };
+    saveState();
+    renderCatalog();
+  }
+
+  function escapeHtml(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  document.addEventListener("click", function (event) {
+    var simButton = event.target.closest("[data-sim-action]");
+    if (simButton) {
+      handleSimAction(simButton.getAttribute("data-sim-action"));
+      return;
+    }
+
+    var openButton = event.target.closest("[data-open-index]");
+    if (openButton) openExperience(Number(openButton.getAttribute("data-open-index")));
+
+    var choiceButton = event.target.closest("[data-choice]");
+    if (choiceButton) chooseDecision(choiceButton.getAttribute("data-choice"));
+
+    var actionButton = event.target.closest("[data-action]");
+    if (!actionButton) return;
+    var action = actionButton.getAttribute("data-action");
+    if (action === "continue") openExperience(firstPendingIndex());
+    if (action === "reset") resetState();
+    if (action === "catalog") { saveReflectionIfVisible(); renderCatalog(); show("inmersa-view-catalog"); }
+    if (action === "next") nextExperience();
+    if (action === "export") exportSession();
+    if (action === "teacher") renderTeacher();
+    if (action === "export-reviewed") exportReviewed();
+  });
+
+  $("#inmersa-reflection-text").addEventListener("blur", saveReflection);
+  $("#inmersa-import-file").addEventListener("change", function (event) {
+    var file = event.target.files && event.target.files[0];
+    if (file) importReviewed(file);
+    event.target.value = "";
+  });
+  document.addEventListener("input", function (event) {
+    if (event.target.matches("[data-feedback]")) saveFeedback();
+  });
+
+  function saveReflectionIfVisible() {
+    if (!$("#inmersa-view-experience").classList.contains("inmersa-hidden")) saveReflection();
+  }
+
+  renderCatalog();
+  show("inmersa-view-catalog");
+})();
+</script>
+</body>
+</html>
